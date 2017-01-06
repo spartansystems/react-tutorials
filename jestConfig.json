@@ -1,0 +1,8 @@
+{
+  "bail": true,
+  "verbose": true,
+  "testRegex": "\\.spec\\.js$",
+  "moduleDirectories": [
+    "node_modules"
+  ]
+}
