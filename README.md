@@ -277,6 +277,49 @@ Ok, cool. Enough already? I know. Let's get into writing and running some of our
 own code :-)
 
 ## Storybook
+
+For the remainder of this tutorial, we'll be using storybook to visualize our
+components. Storybook is a nice little utility that allows us to render react
+components and change their properties through a gui. [Check out the
+docs](https://getstorybook.io/) and the
+[Repo](https://github.com/storybooks/react-storybook)
+
+In order to start up the storybook server, run `npm run storybook ` and then
+visit [`http://localhost:9001`](http://localhost:9001).
+
+You'll see a button that we have already created for you that is also styled
+using [Milligram](https://milligram.github.io/) by default. Milligram isn't a
+standard for us by any means, I've just included it here to get us rolling...
+
+Now, take a look at the Button Component in storybook. Below the button you will
+see a section with two tabs "Action Logger" and "Knobs"; this is where storybook
+starts to get fun. Click the button and you'll see events being logged into the
+action logger. Now switch to the Knobs tab and start changing around some of the
+values. They should immediately update the state of that component,
+demonstrating the different parameters that are available for change on that
+component.
+
+Curious about where that code is? Take a look at `components/Button/stories.js`.
+
+Now, lets create our own component and a story to boot.
+
+```bash
+# first lets create the directory that will contain the Header Component
+mkdir components/Header
+
+# next we create the file responsible for exporting all of our work
+touch components/Header/index.js
+
+# this file will contain the actual component source code
+touch components/Header/component.js
+
+# last, this file will contain the stories
+touch components/Header/stories.js
+```
+
+Now, lets crack open that component file and insert a simple react component for
+a header element:
+
 ## CSS Modules
 ## Testing With Enzyme
 ## Logic in Components
