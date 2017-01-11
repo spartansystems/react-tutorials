@@ -301,7 +301,7 @@ component.
 
 Curious about where that code is? Take a look at `components/Button/stories.js`.
 
-Now, lets create our own component and a story to boot.
+> Now, lets create our own component and a story to boot.
 
 ```bash
 # first lets create the directory that will contain the Header Component

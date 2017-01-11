@@ -4,7 +4,7 @@
   "description": "A project for learning react coming from a design background",
   "main": "index.js",
   "scripts": {
-    "start": "start-storybook -c .storybook",
+    "start": "start-storybook -c .storybook -p 9000",
     "test": "jest -c jestConfig.json",
     "lint": "eslint -c .eslintrc ."
   },
