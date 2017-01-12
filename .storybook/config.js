@@ -1,6 +1,8 @@
 import React from 'react'
 import { configure, addDecorator } from '@kadira/storybook';
 
+import milligram from 'milligram'
+
 const req = require.context('../components', true, /.stories.js$/)
 
 function loadStories() {

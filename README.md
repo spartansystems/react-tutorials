@@ -301,25 +301,97 @@ component.
 
 Curious about where that code is? Take a look at `components/Button/stories.js`.
 
-> Now, lets create our own component and a story to boot.
+## Destructuring Assignment - [link](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 
-```bash
-# first lets create the directory that will contain the Header Component
-mkdir components/Header
+Taking a look inside the Button component, there are a few more things going on
+than what we discussed earlier. First off, notice how we are defining the Button
 
-# next we create the file responsible for exporting all of our work
-touch components/Header/index.js
+```javascript
+function Button ({
+  theme = 'default',
+  text,
+  handleClick = () => {}
+}) {
+  // omitted
+}
+```
+This syntax inside the parenthesis might seem a bit strange, but its really for
+your convenience. Typically, we would define the button taking only one
+argument, `props`
 
-# this file will contain the actual component source code
-touch components/Header/component.js
+```javascript
+function Button(props) {
 
-# last, this file will contain the stories
-touch components/Header/stories.js
+  // the difference here is that inside of this Component, we will have to
+  // reference each of the properties through the prop argument that we pased in
+  // so our return statement will look like this:
+  return (
+    <button
+      onClick={props.handleClick}
+      className={AVAILABLE_THEMES[props.theme]}
+    >
+      {props.text}
+    </button>
+  )
+
+}
+
+// in both cases, the button is used the same
+
+const buttonProps = {
+  theme: 'default',
+  text: 'please click me!'
+  handleClick: () => console.log('i was clicked!')
+}
+
+// and used like this
+
+<Button {...buttonProps} />
 ```
 
-Now, lets crack open that component file and insert a simple react component for
-a header element:
+Typically, we will use what is called [Destructuring
+Assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) when defining our component functions. This will allow us to
+1 - access our properties without having to 'reach through' props
+2 - provide easy to read default values inline in the function definition
 
-## CSS Modules
+Lets break this down just one step further, if we have an object foo defined
+like so:
+
+```javascript
+const foo = {
+  bar: 1,
+  baz: 2
+}
+```
+
+And we want to assign the values `bar` and `baz` to local variables, we can use
+the following shorthand:
+
+```javascript
+const { bar, baz } = foo
+
+console.log(bar) // => 1
+console.log(baz) // => 2
+```
+
+This is exactly what we are doing in our new style function definition, with
+only one difference. We are setting default values (if we want) when they are
+not already provided.
+
+So in our silly example here, if we want, we can provide default values for
+properties that might not be defined in the object we are 'destructuring'. Lets
+set a property `bong` to equal `bubbles` in that same line.
+
+```javascript
+const { bar, baz, bong = 'bubbles' } = foo
+
+console.log(bar) // => 1
+console.log(baz) // => 2
+console.log(bong) // => 'bubbles'
+```
+
+Clear as mud? Lets move on!
+
+
+
 ## Testing With Enzyme
-## Logic in Components

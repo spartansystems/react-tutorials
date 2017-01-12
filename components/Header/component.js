@@ -23,8 +23,6 @@ export default function ({
   }
 
   return (
-    <section className="header">
-      <HeaderTag>{title}</HeaderTag>
-    </section>
+    <HeaderTag>{title}</HeaderTag>
   )
 }
