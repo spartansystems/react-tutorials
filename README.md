@@ -281,13 +281,10 @@ own code :-)
 One last detail...
 
 Take a look at the Button Component defined in `components/Button/component.js`
-
-Notice that there are a few more things going on than what we discussed earlier.
-First off, notice how we are defining our Button This syntax inside the
-parenthesis might seem a bit strange, but its really for your convenience.
+Notice how we are defining our Button. This syntax inside the parenthesis might
+seem a bit strange, but its really for your convenience.
 
 ```javascript
-// how Button is defined in our example
 function Button ({
   theme = 'default',       // here we are defining a default value for 'theme'
   text,                    // we are NOT however defining a default value for text
@@ -296,14 +293,14 @@ function Button ({
 ```
 
 In other react tutorials / examples you might see "stateless" components defined
-as follows:
+as the following:
 
 ```javascript
 function Button(props) {
 
-  // the difference here is that inside of this Component, we will have to
-  // reference each of the properties through the prop argument that we pased in
-  // so our return statement will look like this:
+  // the difference here is that in this case, we will have to reference each
+  // of the properties through the prop argument that we pased in so our return
+  // statement will look like this:
   return (
     <button
       onClick={props.handleClick}
@@ -316,7 +313,7 @@ function Button(props) {
 }
 ```
 
-In both scenarios, the button has the same public API (is called the same way).
+In both scenarios, the Button has the same public API (is called the same way).
 
 ```javascript
 const buttonProps = {
@@ -332,14 +329,16 @@ const buttonProps = {
 
 #### So what is this black magic using the curly braces?
 
-It is is called [Destructuring
-Assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
-When defining our component functions, destructuring assignment allows us to:
-1 - access our properties without having to 'reach through' props
-2 - provide easy to read default values inline in the function definition
+It's called "[Destructuring
+Assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)"
 
-Lets break this down just one step further, if we have an object foo defined
-like so:
+When defining our component functions, destructuring assignment allows us to:
+
+1. Access our properties without having to 'reach through' props parameter
+1. Provide easy to read default values inline in the function definition
+
+Lets break this down one step further just ignoring React for now. If we have an
+object `foo` defined like so:
 
 ```javascript
 const foo = {
@@ -360,11 +359,8 @@ console.log(baz) // => 2
 
 This is exactly what we are doing in our new style function definition, with
 only one difference. We are setting default values (if we want) when they are
-not already provided.
-
-So in our silly example here, lets provide default values for properties that
-might not be defined in `foo`. Lets now use destructuring assignment to pick
-values out of some more object while providing default values.
+not already provided. Lets now use destructuring assignment to pick values out
+of some more object while providing default values.
 
 ```javascript
 // Ex1: all variables get the default values
@@ -398,17 +394,15 @@ console.log(baz) // => 'chicks'
 console.log(bong) // => 'for free'
 ```
 
-Clear as mud? Lets move on!
+Clear as mud? Great, lets move on!
 
 ## Writing Logic in Our Components
 
-Given that our Components are entirely written in javascript, that means that we
-can use javascript to define and control that components behavior. So, for
-demonstration purposes, lets create a component that renders a title and some
-text.
+Given that our Components are entirely written in JavaScript, that means that we
+can use JavaScript to define and control their behavior. So, for demonstration
+purposes, lets create a component that renders a title and some text.
 
 ```javascript
-// iteration 0
 // define a component to render our title
 function Header({ title }) {
   return (<h1>{title}</h1>)
@@ -436,10 +430,9 @@ following scenarios
 
 ```javascript
 // scenario 1
-
 <Header title="Rufio" />
 
-// which should result in the following
+// should result in the following
 <section>
   <h1>Rufio</h1>
 </section>
@@ -453,7 +446,7 @@ for his big, spiked, red-striped hair.`
 
 <Header title={title} text={text} />
 
-// which should result in the following
+// should result in the following
 <section>
   <h1>Rufio</h1>
   <p>
@@ -464,8 +457,8 @@ for his big, spiked, red-striped hair.`
 </section>
 ```
 
-Ok, so this seems reasonable. Lets update the content region code to only
-display the text if it is passed in:
+Ok, so this seems reasonable. Lets update ContentRegion to only display the text
+if it is passed in:
 
 ```javascript
 
@@ -489,27 +482,24 @@ function ContentRegion({ title, text }) {
 }
 ```
 
-In the above example, if we call the ContentRegion with a title and no text like
-so:
+Now, if we call the ContentRegion with a title and no text:
 ```javascript
 <ContentRegion title="A title" />
 ```
 The title will be defined as "A title" and the text will be `undefined`.
 Remember from our previous exercises that `undefined` is a falsy value, which
-means that if we evaluate it in an conditional, as we are doing above, it will
-return `false`.
+means that if we evaluate it in an conditional, it will evaluate as `false`.
 
 Furthermore, if we call the Component with title and text
 ```javascript
 <ContentRegion title="A title" text="lorem..."/>
 ```
-The title will be defined as "A title" and the text will be "lorem..."
-Remember from our previous exercises that a non-empty string is a truthy value, which
-means that if we evaluate it in an conditional, as we are doing above, it will
-return `true`.
+The title will be defined as "A title" and the text will be "lorem..." Remember
+from our previous exercises that a non-empty string is a truthy value, which
+means that if we evaluate it in an conditional, it will evaluate as `true`.
 
-Now, lets do a simple refactor to reduce our duplicated code in the
-SectionComponent:
+Now, lets do a simple refactor to reduce the duplicated code in
+ContentRegion:
 
 ```javascript
 function ContentRegion({ title, text }) {
@@ -524,13 +514,13 @@ function ContentRegion({ title, text }) {
 The secret sauce is the line `{text && (<Body text={text} />)}`. Here we are
 checking that `text` is a truthy value (a non empty string) and then rendering
 the `Body` component in-line in that evaluation. A fun tidbit of info is that
-when using `&&` in javascript, the last evaulated operator is returned. So in
+when using `&&` in JavaScript, the last evaulated operator is returned. So in
 our case that is `(<Body text={text} />)` which is what is eventually rendered
 (given that `text` is a truthy value). You can see some more examples of this in
 the [react
 documentation](https://facebook.github.io/react/docs/conditional-rendering.html#inline-if-with-logical-ampamp-operator)
 
-Last trick, what if we wanted to update our Component to render multiple
+Last trick. What if we wanted to update our Component to render multiple
 paragraphs if we were to pass in an array of strings for the value of text?
 Seems reasonable ;)
 
@@ -617,7 +607,7 @@ const text = ['line 1', 'line 2', 'line 3']
 </section>
 ```
 
-Viola!
+Boom.
 
 ## Storybook
 
@@ -642,10 +632,26 @@ values. They should immediately update the state of that component,
 demonstrating the different parameters that are available for change on that
 component.
 
-### Code Structure
+## Generating Components
 
-Curious about where that code is? Take a look at the directory containing that
-component and the associated files
+Lets install the [redux-cli](https://github.com/SpencerCDixon/redux-cli) tool so
+that you can create and iterate on components with ease.
+```
+npm install -g redux-cli
+```
+And now lets create a "dumb" (Stateless) Component
+```
+redux g dumb SiteHeader
+```
+If you then go look in `components/SiteHeader` you'll see everything that we
+just generated. Also, look in storybook, the component should already be wired
+up. You can now go in, change the component and view your results in real time.
+
+## Code Structure
+
+Our Components follow a pretty simple pattern where all of the dependencies for
+rendering that component should be included in that component's directory.
+
 ```bash
 ▼ components/
   ▼ Button/
@@ -656,9 +662,12 @@ component and the associated files
       styles.css          # styles for the individual component
 ```
 
-## Testing With Enzyme
+In order to use this component, just import it like the following:
 
-Now, lets take what we've learned and write some tests and view our progress in
-storybook!
+```javascript
+import Button from './components/Button'
 
-This piece is still WIP. Sorry, I'll have it together next week!
+function SomeLayoutWithOnlyAButton () {
+  return (<Button />)
+}
+```
