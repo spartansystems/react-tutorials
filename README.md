@@ -617,8 +617,8 @@ components and change their properties through a gui. [Check out the
 docs](https://getstorybook.io/) and the
 [Repo](https://github.com/storybooks/react-storybook)
 
-In order to start up the storybook server, run `npm run storybook ` and then
-visit [`http://localhost:9001`](http://localhost:9001).
+In order to start up the storybook server, run `npm install && npm run storybook
+` and then visit [`http://localhost:9001`](http://localhost:9001).
 
 You'll see a button that we have already created for you that is also styled
 using [Milligram](https://milligram.github.io/) by default. Milligram isn't a
