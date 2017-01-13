@@ -304,20 +304,21 @@ Curious about where that code is? Take a look at `components/Button/stories.js`.
 ## Destructuring Assignment - [link](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 
 Taking a look inside the Button component, there are a few more things going on
-than what we discussed earlier. First off, notice how we are defining the Button
+than what we discussed earlier. First off, notice how we are defining our Button
+This syntax inside the parenthesis might seem a bit strange, but its really for
+your convenience.
 
 ```javascript
+// how Button is defined in our example
 function Button ({
-  theme = 'default',
-  text,
-  handleClick = () => {}
-}) {
-  // omitted
-}
+  theme = 'default',       // here we are defining a default value for 'theme'
+  text,                    // we are NOT however defining a default value for text
+  handleClick = () => {}   // the default click handler will be just an empty function
+}) { ... }
 ```
-This syntax inside the parenthesis might seem a bit strange, but its really for
-your convenience. Typically, we would define the button taking only one
-argument, `props`
+
+In other react tutorials / examples you might see "stateless" components defined
+as follows:
 
 ```javascript
 function Button(props) {
@@ -335,9 +336,11 @@ function Button(props) {
   )
 
 }
+```
 
-// in both cases, the button is used the same
+In both scenarios, the button has the same public API (is called the same way).
 
+```javascript
 const buttonProps = {
   theme: 'default',
   text: 'please click me!'
@@ -349,8 +352,11 @@ const buttonProps = {
 <Button {...buttonProps} />
 ```
 
-Typically, we will use what is called [Destructuring
-Assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) when defining our component functions. This will allow us to
+#### So what is this black magic using the curly braces?
+
+It is is called [Destructuring
+Assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
+When defining our component functions, destructuring assignment allows us to:
 1 - access our properties without having to 'reach through' props
 2 - provide easy to read default values inline in the function definition
 
@@ -378,20 +384,266 @@ This is exactly what we are doing in our new style function definition, with
 only one difference. We are setting default values (if we want) when they are
 not already provided.
 
-So in our silly example here, if we want, we can provide default values for
-properties that might not be defined in the object we are 'destructuring'. Lets
-set a property `bong` to equal `bubbles` in that same line.
+So in our silly example here, lets provide default values for properties that
+might not be defined in `foo`. Lets now use destructuring assignment to pick
+values out of some more object while providing default values.
 
 ```javascript
-const { bar, baz, bong = 'bubbles' } = foo
+// Ex1: all variables get the default values
+const foo1 = { }
 
-console.log(bar) // => 1
-console.log(baz) // => 2
+let { bar = 'babar', baz = 'babaz', bong = 'bubbles' } = foo1
+
+console.log(bar) // => 'babar'
+console.log(baz) // => 'babaz'
 console.log(bong) // => 'bubbles'
+
+
+// Ex2: only baz and bong get default values
+const foo2 = { bar: 'barnone' }
+
+let { bar = 'babar', baz = 'babaz', bong = 'bubbles' } = foo2
+
+// here only baz and bong will get default values
+console.log(bar) // => 'barnone'
+console.log(baz) // => 'babaz'
+console.log(bong) // => 'bubbles'
+
+
+// Ex3: no default values were utilized
+const foo3 = { bar: 'money for nothin', baz: 'chicks', bong: 'for free'}
+
+let { bar = 'babar', baz = 'babaz', bong = 'bubbles' } = foo3
+
+console.log(bar) // => 'money for nothin'
+console.log(baz) // => 'chicks'
+console.log(bong) // => 'for free'
 ```
 
 Clear as mud? Lets move on!
 
+## Writing Logic in Our Components
 
+Given that our Components are entirely written in javascript, that means that we
+can use javascript to define and control that components behavior. So, for
+demonstration purposes, lets create a component that renders a title and some
+text.
+
+```javascript
+// iteration 0
+// define a component to render our title
+function Header({ title }) {
+  return (<h1>{title}</h1>)
+}
+
+// define a component to render our text
+function Body({ text }) {
+  return (<p>{text}</p>)
+}
+
+// now heres a component to bring it all together
+function ContentRegion({ title, text }) {
+  return (
+    <section>
+      <Header title={title} />
+      <Body text={text} />
+    </section>
+  )
+}
+```
+
+So, now that we have our content region, lets update it to only define text if
+it was passed in as a prop. So we want the component to work in both of the
+following scenarios
+
+```javascript
+// scenario 1
+
+<Header title="Rufio" />
+
+// which should result in the following
+<section>
+  <h1>Rufio</h1>
+</section>
+
+// scenario 2
+
+const title = 'Rufio'
+const text = `Rufio is the leader of the Lost Boys in the 1991 film Hook, played
+by Dante Basco. He is an original character in this film, commonly remembered
+for his big, spiked, red-striped hair.`
+
+<Header title={title} text={text} />
+
+// which should result in the following
+<section>
+  <h1>Rufio</h1>
+  <p>
+    Rufio is the leader of the Lost Boys in the 1991 film Hook, played by Dante
+    Basco. He is an original character in this film, commonly remembered for his
+    big, spiked, red-striped hair.
+  </p>
+</section>
+```
+
+Ok, so this seems reasonable. Lets update the content region code to only
+display the text if it is passed in:
+
+```javascript
+
+// iteraion 1
+function ContentRegion({ title, text }) {
+  if(!text) {
+    return (
+      <section>
+        <Header title={title} />
+      </section>
+    )
+  }
+
+  // otherwise, return the whole thing
+  return (
+    <section>
+      <Header title={title} />
+      <Body text={text} />
+    </section>
+  )
+}
+```
+
+In the above example, if we call the ContentRegion with a title and no text like
+so:
+```javascript
+<ContentRegion title="A title" />
+```
+The title will be defined as "A title" and the text will be `undefined`.
+Remember from our previous exercises that `undefined` is a falsy value, which
+means that if we evaluate it in an conditional, as we are doing above, it will
+return `false`.
+
+Furthermore, if we call the Component with title and text
+```javascript
+<ContentRegion title="A title" text="lorem..."/>
+```
+The title will be defined as "A title" and the text will be "lorem..."
+Remember from our previous exercises that a non-empty string is a truthy value, which
+means that if we evaluate it in an conditional, as we are doing above, it will
+return `true`.
+
+Now, lets do a simple refactor to reduce our duplicated code in the
+SectionComponent:
+
+```javascript
+function ContentRegion({ title, text }) {
+  return (
+    <section>
+      <Header title={title}/>
+      {text && (<Body text={text}/>)}
+    </section>
+  )
+}
+```
+The secret sauce is the line `{text && (<Body text={text} />)}`. Here we are
+checking that `text` is a truthy value (a non empty string) and then rendering
+the `Body` component in-line in that evaluation. A fun tidbit of info is that
+when using `&&` in javascript, the last evaulated operator is returned. So in
+our case that is `(<Body text={text} />)` which is what is eventually rendered
+(given that `text` is a truthy value). You can see some more examples of this in
+the [react
+documentation](https://facebook.github.io/react/docs/conditional-rendering.html#inline-if-with-logical-ampamp-operator)
+
+Last trick, what if we wanted to update our Component to render multiple
+paragraphs if we were to pass in an array of strings for the value of text?
+Seems reasonable ;)
+
+```javascript
+// lets start with the Body component, we should update the function definition
+// so that its crystal clear that we are expecting an array, we'll do that by
+// giving it a default value of `[]` for text. Where text should be an array of
+// strings
+
+function Body({ text = [] }) {
+  // omitted
+}
+
+// next lets update the body so that we are iterating over the text that is
+// provided. Remember the Array#map method?
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
+function Body({ text = [] }) {
+  return (
+    <div>
+      {text.map((t) => <p>{t}</p>)}
+    </div>
+  )
+}
+
+// here we are mapping over the text that is passed in to return an array of
+// paragraphs. given that text is an array of three string
+
+const text = ['line 1', 'line 2', 'line 3']
+
+// if we call the following
+text.map((t) => <p>{t}</p>)
+
+// we will be given this in return
+[ <p>line1</p>, <p>line2</p>, <p>line3</p> ]
+
+// which within the context of React, is rendered as three seperate paragraps
+// so given this from our template above
+
+<div>
+  {text.map((t) => <p>{t}</p>)}
+</div>
+
+// becomes
+
+<div>
+  <p>line1</p>
+  <p>line2</p>
+  <p>line3</p>
+</div>
+```
+
+Ok, so now we've gotten the body updated, now we need to update our
+ContentRegion Component. Lets change the definition to have a default value for
+text like we did for Body, and also update the conditional render of the body
+component.
+
+```javascript
+  function ContentRegion({ title, text = [] }) {
+    return (
+      <section>
+        <Header title={title}/>
+        {text.length > 0 && (<Body text={text}/>)}
+      </section>
+    )
+  }
+```
+Now calling our ConentRegion with an array of strings for text will result in
+multiple paragraphs.
+```javascript
+
+const title = 'The title'
+const text = ['line 1', 'line 2', 'line 3']
+
+<ContentRegion title={title} text={text} />
+
+// results in
+<section>
+  <div>
+    <p>line1</p>
+    <p>line2</p>
+    <p>line3</p>
+  </div>
+</section>
+```
+
+Viola!
 
 ## Testing With Enzyme
+
+Now, lets take what we've learned and write some tests and view our progress in
+storybook!
+
+
