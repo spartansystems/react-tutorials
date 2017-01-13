@@ -3,7 +3,7 @@ import React from 'react'
 const AVAILABLE_THEMES = {
   'default': 'button',
   'outline': 'button-outline',
-  'clear': 'clear'
+  'clear': 'button-clear'
 }
 
 function Button ({

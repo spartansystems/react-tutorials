@@ -4,7 +4,7 @@ import { withKnobs, text, select } from '@kadira/storybook-addon-knobs';
 import Button from './component'
 
 const classNameOptions = [
-  'button', 'outline', 'clear'
+  'default', 'outline', 'clear'
 ]
 const stories = storiesOf('Button', module);
 
