@@ -24,5 +24,6 @@ export default function ({
 
   return (
     <HeaderTag>{title}</HeaderTag>
+
   )
 }

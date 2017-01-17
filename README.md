@@ -430,7 +430,7 @@ following scenarios
 
 ```javascript
 // scenario 1
-<Header title="Rufio" />
+<ContentRegion title="Rufio" />
 
 // should result in the following
 <section>
