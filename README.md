@@ -671,3 +671,37 @@ function SomeLayoutWithOnlyAButton () {
   return (<Button />)
 }
 ```
+
+## Testing
+
+OK, I know that this has been a bit of reading until now, and for that I
+apologize. In fact, it might be a good idea to put this at the top and work
+testing examples into all of the sections that were discussed up until now. That
+can be for another day.
+
+For unit testing React Components, we'll be using primarily two libraries:
+1. [Jest](https://facebook.github.io/jest/) - the test runner
+1. [Enzyme](http://airbnb.io/enzyme/) - renders components and helps us make
+   assertions
+
+Lets start by just running our test suite, and then we'll drop into code. You
+can run the suite, same as the previous exercises by running `npm test` from the
+command line. Go ahead, do it. Additionally, if you would like the test runner
+to stay active and watch for file changes, you can run `npm test -- --watch`.
+This passes the `--watch` flag to the underlying test running and lets Jest know
+that it should stay active and watch for changes.
+
+Now, notice that we have a passing test suite for the two react components that
+were created to demonstrate storybook, Button and Header. If at any point you
+get stuck during this testing section, feel free to use those components and
+their tests for reference.
+
+Now, take a look at the ProfileCard component's specs file located at
+`app/components/ProfileCard/component.spec.js` and change the first pending spec
+to (`xit`) to `it`.
+
+Run the test suite and watch it fail. Now, fix the spec and move onto the next!
+
+For these exercises, you might find the [enzyme](http://airbnb.io/enzyme/)
+documentation helpful. Have fun!
+
