@@ -152,7 +152,7 @@ However, there's a common gotcha with some comparison operators that's worth poi
 If you've worked with JS before, you've likely seen the `===` comparison operator used to check two expressions for equality:
 
 ```javascript
-if someVar === anotherVar {
+if (someVar === anotherVar) {
   doSomethingCrazy();
 }
 ```
