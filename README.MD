@@ -143,3 +143,30 @@ so be patient, you should have everything you need.
 Once that spec is running green, run `npm test` and look at all that green.
 Doesn't that feel good?
 
+## JavaScript Operators
+
+JavaScript comes with many common operators: `+`, `-`, `/`, `=`, etc.
+
+However, there's a common gotcha with some comparison operators that's worth pointing out.
+
+If you've worked with JS before, you've likely seen the `===` comparison operator used to check two expressions for equality:
+
+```javascript
+if (someVar === anotherVar) {
+  doSomethingCrazy();
+}
+```
+
+Why, you ask, are we using `===` when instead we could use `==`?  
+
+Let's see them in action:
+
+```javascript
+console.log('1' == 1)  	// => true (huh?)
+	
+console.log('1' === 1) 	// => false
+```
+
+In JS, the operators `==` (and its close friend `!=`) do something known as *automatic type conversion*, which could lead to unintended results.
+
+You can read more about it [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript).  But for now, all you need to know is that you should be using `===` and `!==` when checking for equality.
