@@ -4,7 +4,7 @@
 * Here we will be using Jest as our test utility, you can find extensive
 * documentation here: https://facebook.github.io/jest/
 *
-* There are a few imporant pieces that you will need to be familiar with.
+* There are a few important pieces that you will need to be familiar with.
 * First off, you'll see us using these words quite frequently:
 *  * context
 *  * describe

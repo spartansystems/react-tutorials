@@ -10,7 +10,7 @@ npm install
 npm test -- intro
 ```
 
-Ok, if you've sucessfully run the above two commands, you should see a failing
+Ok, if you've successfully run the above two commands, you should see a failing
 test. This one is easy enough. Take a look at the test file and see what it's
 doing! There are comments in-line in the file that should help you resolve the
 issues. It is located at: `__tests__/intro-test.js`
@@ -39,10 +39,10 @@ npm test -- primitives
 
 Once you have that spec running green, continue onto functions below.
 
-## Javascript Functions
+## JavaScript Functions
 
 A function (without side effects), in its simplest form, is something that takes
-and input and returns some output. For example, the following is a function:
+an input and returns some output. For example, the following is a function:
 
 ```javascript
 
@@ -81,7 +81,7 @@ A few more pointers on functions. A function consists of a few key components:
 * function body
 
 ```javascript
-// in traditional javascrip (not es6) we have the following
+// in traditional JavaScript (not es6) we have the following
 
 function adder (x, y, z) {
   console.log('we are adding these three values: ', x, y, z)
@@ -109,7 +109,7 @@ const adder = (x, y, z) => {
 Now, run the spec 'functions' by calling `npm test -- functions` from the command
 line and work through the exercises there!
 
-## Javascript Objects
+## JavaScript Objects
 
 We've all seen objects before, they're denoted by the curly braces being
 assigned to a variable like so:
@@ -120,7 +120,7 @@ const foo = {
 }
 ```
 
-We can access the properties within the object using either dot notation or by a
+We can access the properties within the object using either dot notation or by
 indexing into the object with a string
 
 ```javascript
